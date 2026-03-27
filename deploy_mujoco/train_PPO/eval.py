@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
 import csv
+from datetime import datetime
 import pickle
 import shutil
 import numpy as np
@@ -170,7 +171,9 @@ def main():
     with open(os.path.join(current_path, "eval_config.yaml"), "r", encoding="utf-8") as f:
         eval_config = yaml.safe_load(f)
 
-    log_dir = os.path.join(current_path, "eval_logs", eval_config["log_name"])
+    run_name = f"{str(eval_config['log_name'])}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = os.path.join(current_path, "eval_logs", run_name)
+    print(f"[eval_PPO] run_dir: {log_dir}")
 
     policy = eval_config["policy"]
     checkpoint = eval_config.get("checkpoint", "")

@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
 import csv
+from datetime import datetime
 import pickle
 import numpy as np
 import torch
@@ -222,7 +223,9 @@ def main():
         eval_config = yaml.load(f, Loader=yaml.FullLoader)
 
     current_path = os.path.dirname(os.path.realpath(__file__))
-    log_dir = os.path.join(current_path, "eval_logs", eval_config["log_name"])
+    run_name = f"{str(eval_config['log_name'])}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = os.path.join(current_path, "eval_logs", run_name)
+    print(f"[eval_SAC] run_dir: {log_dir}")
 
     policy = eval_config['policy']
     checkpoint = eval_config['checkpoint']

@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
 import csv
+from datetime import datetime
 import pickle
 import shutil
 from typing import Any, Dict, Optional, Tuple
@@ -290,7 +291,9 @@ def main() -> None:
     with open(cfg_file, "r", encoding="utf-8") as f:
         eval_config = yaml.load(f, Loader=yaml.FullLoader)
 
-    log_dir = os.path.join(current_path, "eval_logs", str(eval_config["log_name"]))
+    run_name = f"{str(eval_config['log_name'])}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = os.path.join(current_path, "eval_logs", run_name)
+    print(f"[eval_SAC_sampling] run_dir: {log_dir}")
     model, go2_cfg, terrain_cfg, episodes, max_episode_steps, seed = _load_eval_context(eval_config, current_path)
 
     sampling_cfg = eval_config.get("sampling", {})

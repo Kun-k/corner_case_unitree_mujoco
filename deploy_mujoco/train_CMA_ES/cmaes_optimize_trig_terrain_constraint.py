@@ -5,6 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."
 import json
 import math
 import shutil
+from datetime import datetime
 from dataclasses import dataclass
 
 import numpy as np
@@ -158,8 +159,10 @@ def main():
     with open(f"{current_path}/{train_config_file}", "r", encoding="utf-8") as f:
         cfg = yaml.load(f, Loader=yaml.FullLoader)
 
-    log_dir = f"{current_path}/logs/{cfg['log_name']}"
+    run_name = f"{cfg['log_name']}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = f"{current_path}/logs/{run_name}"
     os.makedirs(log_dir, exist_ok=True)
+    print(f"[train_CMA_ES_constraint] run_dir: {log_dir}")
     shutil.copy2(os.path.join(current_path, cfg["terrain_config"]), log_dir)
     shutil.copy2(os.path.join(current_path, train_config_file), log_dir)
 
