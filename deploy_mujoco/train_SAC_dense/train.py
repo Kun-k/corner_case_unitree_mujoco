@@ -221,6 +221,8 @@ def train_sac_dense(
     consecutive_fail_keep_k: int = 0,
 ):
     preload_pkl_paths = preload_pkl_paths or []
+    checkpoint_dir = os.path.join(log_dir, "checkpoints")
+    os.makedirs(checkpoint_dir, exist_ok=True)
 
     def make_env():
         trainer = TerrainTrainer(go2_cfg, terrain_cfg)
@@ -285,6 +287,7 @@ def train_sac_dense(
         smooth_window=int(plot_smooth_window),
         checkpoint_every_steps=int(checkpoint_every_steps),
         checkpoint_start_after_steps=int(learning_starts),
+        checkpoint_dir=checkpoint_dir,
     )
 
     model.learn(total_timesteps=total_timesteps,

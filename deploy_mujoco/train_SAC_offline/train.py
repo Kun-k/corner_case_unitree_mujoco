@@ -179,6 +179,8 @@ def train_sac_offline(cfg: dict) -> None:
     current_path = os.path.dirname(os.path.realpath(__file__))
     log_dir = os.path.join(current_path, "train_logs", str(cfg.get("log_name", "sac_offline")))
     os.makedirs(log_dir, exist_ok=True)
+    checkpoint_dir = os.path.join(log_dir, "checkpoints")
+    os.makedirs(checkpoint_dir, exist_ok=True)
 
     cfg_file = os.path.join(current_path, "train_config.yaml")
     terrain_cfg_file = os.path.join(current_path, str(cfg.get("terrain_config", "terrain_config.yaml")))
@@ -308,7 +310,7 @@ def train_sac_offline(cfg: dict) -> None:
             )
 
         if update % checkpoint_every_updates == 0:
-            model.save(os.path.join(log_dir, f"checkpoint_update_{update}.zip"))
+            model.save(os.path.join(checkpoint_dir, f"checkpoint_update_{update}.zip"))
 
         if eval_enabled and eval_env is not None and eval_logger is not None and update % eval_every_updates == 0:
             eval_row = run_eval_rollouts(

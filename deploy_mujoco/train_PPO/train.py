@@ -97,12 +97,21 @@ class FailureRecordingWrapper(gym.Wrapper):
 class TrainingLoggerCallback(BaseCallback):
     """Unified logger for PPO/SAC so plotting remains consistent."""
 
-    def __init__(self, out_dir: str, save_every_steps: int = 2000, smooth_window: int = 20, checkpoint_every_steps: int = 10000, verbose: int = 0):
+    def __init__(
+        self,
+        out_dir: str,
+        save_every_steps: int = 2000,
+        smooth_window: int = 20,
+        checkpoint_every_steps: int = 10000,
+        checkpoint_dir: str | None = None,
+        verbose: int = 0,
+    ):
         super().__init__(verbose)
         self.out_dir = out_dir
         self.save_every_steps = int(max(1, save_every_steps))
         self.smooth_window = int(max(1, smooth_window))
         self.checkpoint_every_steps = int(max(1, checkpoint_every_steps))
+        self.checkpoint_dir = checkpoint_dir or out_dir
 
         self.episode_rewards = []
         self.episode_lengths = []
@@ -112,6 +121,7 @@ class TrainingLoggerCallback(BaseCallback):
         self.loss_timesteps = []
 
         os.makedirs(self.out_dir, exist_ok=True)
+        os.makedirs(self.checkpoint_dir, exist_ok=True)
 
     def _on_step(self) -> bool:
         infos = self.locals.get("infos", [])
@@ -146,7 +156,7 @@ class TrainingLoggerCallback(BaseCallback):
             self._save_combined_plot("training_curves_partial.png")
 
         if self.num_timesteps % self.checkpoint_every_steps == 0:
-            ckpt_path = os.path.join(self.out_dir, f"checkpoint_step_{self.num_timesteps}.zip")
+            ckpt_path = os.path.join(self.checkpoint_dir, f"checkpoint_step_{self.num_timesteps}.zip")
             self.model.save(ckpt_path)
 
         return True
@@ -385,6 +395,9 @@ def configure_torch_runtime(cfg: dict):
 
 def train_ppo(go2_cfg, terrain_cfg, total_timesteps=20000, max_episode_steps=35, log_dir="train_terrain_logs", device="auto", learning_rate=3e-4, batch_size=256, n_steps=2048, n_epochs=10, gamma=0.99, gae_lambda=0.95, clip_range=0.2, ent_coef=0.0, vf_coef=0.5, max_grad_norm=0.5, seed=0, plot_save_every_steps=2000, plot_smooth_window=20, checkpoint_every_steps=10000, preload_model_path="", failure_pkl_name="train_failure_chains.pkl", failure_flush_every_episodes=50, classifier_gate=None, classifier_threshold=0.5, consecutive_fail_keep_k: int = 0):
 
+    checkpoint_dir = os.path.join(log_dir, "checkpoints")
+    os.makedirs(checkpoint_dir, exist_ok=True)
+
     def make_env():
         trainer = TerrainTrainer(go2_cfg, terrain_cfg)
         env = TerrainGymEnv(trainer, max_episode_steps=max_episode_steps)
@@ -438,6 +451,7 @@ def train_ppo(go2_cfg, terrain_cfg, total_timesteps=20000, max_episode_steps=35,
         save_every_steps=int(plot_save_every_steps),
         smooth_window=int(plot_smooth_window),
         checkpoint_every_steps=int(checkpoint_every_steps),
+        checkpoint_dir=checkpoint_dir,
     )
 
     model.learn(total_timesteps=total_timesteps, callback=callback)

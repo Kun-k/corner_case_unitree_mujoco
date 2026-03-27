@@ -400,6 +400,8 @@ def train(cfg: Dict[str, Any]) -> None:
 
     log_dir = os.path.join(CURRENT_DIR, "train_logs", str(cfg.get("log_name", "sac_replay_default")))
     os.makedirs(log_dir, exist_ok=True)
+    checkpoint_dir = os.path.join(log_dir, "checkpoints")
+    os.makedirs(checkpoint_dir, exist_ok=True)
 
     train_cfg_path = os.path.join(CURRENT_DIR, "train_config.yaml")
     if os.path.exists(train_cfg_path):
@@ -569,7 +571,7 @@ def train(cfg: Dict[str, Any]) -> None:
             )
 
         if checkpoint_every_steps > 0 and step % checkpoint_every_steps == 0:
-            ckpt = os.path.join(log_dir, f"checkpoint_step_{step}.pt")
+            ckpt = os.path.join(checkpoint_dir, f"checkpoint_step_{step}.pt")
             _save_checkpoint(ckpt, sac, replay_buffer, step, cfg)
 
     csv_logger.flush()

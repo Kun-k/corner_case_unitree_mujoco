@@ -241,6 +241,8 @@ def main():
     classifier_log_name = classifier_cfg.get("log_name", cfg.get("log_name", "offline_default"))
     log_dir = os.path.join(base_dir, "classifier", str(classifier_log_name))
     os.makedirs(log_dir, exist_ok=True)
+    checkpoint_dir = os.path.join(log_dir, "checkpoints")
+    os.makedirs(checkpoint_dir, exist_ok=True)
 
     reward_cfg_path = os.path.join(base_dir, cfg.get("terrain_config", "terrain_config.yaml"))
     reward_cfg = load_reward_cfg_from_yaml(reward_cfg_path)
@@ -353,7 +355,7 @@ def main():
                     "model_state_dict": model.state_dict(),
                     "optimizer_state_dict": optimizer.state_dict(),
                 },
-                os.path.join(log_dir, f"checkpoint_epoch_{ep}.pt"),
+                os.path.join(checkpoint_dir, f"checkpoint_epoch_{ep}.pt"),
             )
 
         if ep % 10 == 0:
