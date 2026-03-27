@@ -1,11 +1,12 @@
-import csv
 import os
-import pickle
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+import csv
+import pickle
 import numpy as np
 import yaml
 from stable_baselines3 import PPO
-
 from deploy_mujoco.classifier_gate import ClassifierGate
 from deploy_mujoco.terrain_trainer import TerrainGymEnv, TerrainTrainer
 

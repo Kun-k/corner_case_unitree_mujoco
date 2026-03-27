@@ -1,10 +1,11 @@
-import csv
 import os
-from typing import Dict, List, Tuple
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+import csv
+from typing import Dict, List, Tuple
 import numpy as np
 import yaml
-
 from deploy_mujoco.offline_data_utils import load_chains_from_pkl_file
 
 

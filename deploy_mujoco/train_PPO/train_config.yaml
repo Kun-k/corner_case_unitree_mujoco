@@ -32,7 +32,7 @@ plot_smooth_window: 20
 checkpoint_every_steps: 200
 
 # Optional warm-start
-preload_model_path: ""   # e.g. deploy/deploy_mujoco_go2/train_PPO/train_logs/xxx/model.zip
+preload_model_path: ""   # e.g. deploy_mujoco/train_PPO/train_logs/xxx/model.zip
 
 # Optional classifier gate for action source selection during training.
 # If enabled: classifier score > threshold => use PPO action, else random action.
@@ -55,4 +55,4 @@ consecutive_fail_keep_k: 1
 
 log_name: "gogogo0316"
 
-# nohup python deploy/deploy_mujoco_go2/train_PPO/train.py >nohup_ppo.out 2>&1 &
+# nohup python deploy_mujoco/train_PPO/train.py >nohup_ppo.out 2>&1 &

@@ -1,10 +1,11 @@
-import json
 import os
-from dataclasses import dataclass
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+import json
+from dataclasses import dataclass
 import numpy as np
 import yaml
-
 from deploy_mujoco.terrain_trainer import TerrainTrainer
 
 

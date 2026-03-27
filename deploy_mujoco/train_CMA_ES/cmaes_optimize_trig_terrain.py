@@ -1,6 +1,9 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
 import json
 import math
-import os
 from dataclasses import dataclass
 
 import numpy as np
@@ -266,5 +269,5 @@ if __name__ == "__main__":
 
 
 '''
-nohup python deploy/deploy_mujoco_go2/train_CMA_ES/cmaes_optimize_trig_terrain.py --go2-task terrain --go2-config go2.yaml --terrain-config terrain_config.yaml --generations 100 --popsize 8 --mode-y 10 --mode-x 10  >emaes.out 2>&1 &
+nohup python deploy_mujoco/train_CMA_ES/cmaes_optimize_trig_terrain.py --go2-task terrain --go2-config go2.yaml --terrain-config terrain_config.yaml --generations 100 --popsize 8 --mode-y 10 --mode-x 10  >emaes.out 2>&1 &
 '''

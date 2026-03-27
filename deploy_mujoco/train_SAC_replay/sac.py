@@ -1,6 +1,9 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
 import torch
 import torch.nn.functional as F
-
 from model import Scalar, soft_target_update
 
 

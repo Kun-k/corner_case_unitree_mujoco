@@ -1,5 +1,7 @@
 import os
 import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
 import mujoco
 import numpy as np
 import yaml
@@ -14,7 +16,6 @@ from deploy_mujoco.utils import quat_to_rpy, pd_control
 import mujoco.viewer
 import time
 
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 from deploy_mujoco.terrain_params import TerrainChanger
 
 
@@ -32,17 +33,15 @@ class TerrainTrainer:
         terrain_config_file,
     ):
 
-        if go2_config_file[0] == "velocity":
-            from deploy_mujoco.velocity.go2_controller import Go2Controller
-        elif go2_config_file[0] == "terrain":
+        if go2_config_file[0] == "terrain":
             from deploy_mujoco.terrain.go2_controller import Go2Controller
         else:
-            from deploy_mujoco.velocity.go2_controller import Go2Controller
+            from deploy_mujoco.terrain.go2_controller import Go2Controller
 
         self.go2_controller = Go2Controller(go2_config_file[1])
 
         # Load Go2 controller config
-        with open(f"{os.path.dirname(os.path.realpath(__file__))}/{go2_config_file[0]}/configs/{go2_config_file[1]}", "r") as f:
+        with open(f"{os.path.dirname(os.path.realpath(__file__))}/{go2_config_file[0]}/configs/{go2_config_file[1]}", "r", encoding='utf-8') as f:
             self.go2_config = yaml.load(f, Loader=yaml.FullLoader)
 
         # MuJoCo model
@@ -51,7 +50,7 @@ class TerrainTrainer:
         self.model.opt.timestep = self.go2_config["simulation_dt"]  # 仿真步长，等于Go2的控制步长
 
         # Terrain setup
-        with open(f"{os.path.dirname(os.path.realpath(__file__))}/{terrain_config_file}", "r") as f:
+        with open(f"{os.path.dirname(os.path.realpath(__file__))}/{terrain_config_file}", "r", encoding="utf-8") as f:
             self.terrain_config = yaml.load(f, Loader=yaml.FullLoader)
         self.terrain_decimation = self.terrain_config.get("terrain_action", {}).get("terrain_decimation", 0)
         self.terrain_types = self.terrain_config.get("terrain_action", {}).get("terrain_types", [])

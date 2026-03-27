@@ -83,5 +83,5 @@ failure_flush_every_episodes: 50
 #log_name: "sac_dense_0312-preload-ratio70"
 log_name: "hhh0324_sac_dense_preload-ratio100"
 
-#nohup python deploy/deploy_mujoco_go2/train_SAC_dense/train.py >nohup_hhh0324_sac_dense_preload-ratio100.out 2>&1 &
-#nohup python deploy/deploy_mujoco_go2/train_SAC_dense/train.py >debug.out 2>&1 &
+#nohup python deploy_mujoco/train_SAC_dense/train.py >nohup_hhh0324_sac_dense_preload-ratio100.out 2>&1 &
+#nohup python deploy_mujoco/train_SAC_dense/train.py >debug.out 2>&1 &

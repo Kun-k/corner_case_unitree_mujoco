@@ -1,5 +1,8 @@
-import time
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
+import time
 import mujoco.viewer
 import mujoco
 import numpy as np
@@ -29,7 +32,7 @@ if __name__ == "__main__":
     parser.add_argument("config_file", type=str, help="config file name in the config folder")
     args = parser.parse_args()
     config_file = args.config_file
-    with open(f"{os.path.dirname(os.path.realpath(__file__))}/configs/{config_file}", "r") as f:
+    with open(f"{os.path.dirname(os.path.realpath(__file__))}/configs/{config_file}", "r", encoding="utf-8") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
         policy_path = config["policy_path"]
         xml_path = config["xml_path"]

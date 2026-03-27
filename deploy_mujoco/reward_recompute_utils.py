@@ -1,6 +1,8 @@
 import os
-from typing import Dict
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+from typing import Dict
 import yaml
 
 

@@ -56,5 +56,5 @@ eval_episodes: 5
 eval_max_episode_steps: 200
 eval_deterministic: false
 
-#nohup python deploy/deploy_mujoco_go2/train_SAC_replay/train.py >nohup_sac_replay-0319-noeval.out 2>&1 &
+#nohup python deploy_mujoco/train_SAC_replay/train.py >nohup_sac_replay-0319-noeval.out 2>&1 &
 

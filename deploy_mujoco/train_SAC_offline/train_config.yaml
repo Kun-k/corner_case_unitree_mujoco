@@ -63,4 +63,4 @@ eval_render: false
 
 log_name: "hhh0324_sac_offline"
 
-# nohup python deploy/deploy_mujoco_go2/train_SAC_offline/train.py >nohup_hhh0324_sac_offline.out 2>&1 &
+# nohup python deploy_mujoco/train_SAC_offline/train.py >nohup_hhh0324_sac_offline.out 2>&1 &

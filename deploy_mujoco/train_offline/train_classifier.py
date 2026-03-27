@@ -1,15 +1,16 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
 import csv
 import json
-import os
 from datetime import datetime
-
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import yaml
-
 from deploy_mujoco.train_offline.data_io import (
     get_log_dirs_and_output_from_train_cfg,
     get_log_loading_options_from_train_cfg,

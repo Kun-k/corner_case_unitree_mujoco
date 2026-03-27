@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
 import numpy as np
 from stable_baselines3.common.buffers import ReplayBuffer
 from deploy_mujoco.offline_data_utils import filter_chain_for_replay

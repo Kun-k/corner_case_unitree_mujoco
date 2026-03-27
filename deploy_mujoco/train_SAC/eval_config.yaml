@@ -14,7 +14,7 @@ go2_task: "terrain"
 go2_config: "go2.yaml"
 terrain_config: "terrain_config.yaml"
 
-episodes: 1000
+episodes: 2000
 max_episode_steps: 35
 seed: 122
 
@@ -42,8 +42,8 @@ classifier_gate:
   hidden_dim: 1024
   device: "cpu"
 
-#nohup python deploy/deploy_mujoco_go2/train_SAC/eval.py >nohup_policy_eval_sac_0310_rew2_21000.out 2>&1 &
-#nohup python deploy/deploy_mujoco_go2/train_SAC/eval.py >nohup_policy_eval_sac_0310_rew2_22000.out 2>&1 &
+#nohup python deploy_mujoco/train_SAC/eval.py >nohup_policy_eval_sac_0310_rew2_21000.out 2>&1 &
+#nohup python deploy_mujoco/train_SAC/eval.py >nohup_policy_eval_sac_0310_rew2_22000.out 2>&1 &
 
-# nohup python deploy/deploy_mujoco_go2/train_SAC/eval.py >nohup_random_eval-3.out 2>&1 &
-# nohup python deploy/deploy_mujoco_go2/train_SAC/eval.py >nohup_sac_eval_1.out 2>&1 &
+# nohup python deploy_mujoco/train_SAC/eval.py >nohup_random_eval-3.out 2>&1 &
+# nohup python deploy_mujoco/train_SAC/eval.py >nohup_sac_eval_1.out 2>&1 &

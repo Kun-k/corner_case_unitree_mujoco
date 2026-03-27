@@ -1,7 +1,10 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
 import mujoco
 import mujoco.viewer
 import numpy as np
-import os
 import yaml
 
 
@@ -10,7 +13,7 @@ class TerrainChanger:
         self.model = model
         self.data = data
         # load default config from yaml on disk
-        with open(f"{os.path.dirname(os.path.realpath(__file__))}/{config_file}", "r") as f:
+        with open(f"{os.path.dirname(os.path.realpath(__file__))}/{config_file}", "r", encoding="utf-8") as f:
             self.terrain_config = yaml.load(f, Loader=yaml.FullLoader)
 
         self.hfield_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_HFIELD, "terrain_hfield")
@@ -603,7 +606,7 @@ if __name__ == "__main__":
     # yaml 读取测试
     config_file = "terrain_config.yaml"
     print(f"{os.path.dirname(os.path.realpath(__file__))}/{config_file}")
-    with open(f"{os.path.dirname(os.path.realpath(__file__))}/{config_file}", "r") as f:
+    with open(f"{os.path.dirname(os.path.realpath(__file__))}/{config_file}", "r", encoding="utf-8") as f:
         terrain_config = yaml.load(f, Loader=yaml.FullLoader)
 
     # 使用get嵌套读取

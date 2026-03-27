@@ -1,8 +1,10 @@
-# HARD LINK between navigation and velocity
-# shared utility functions for navigation and velocity tasks
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
-# math
 import numpy as np
+
+
 def wrap_to_pi(angle):
     """mapping angle in (-pi, pi]"""
     return (angle + np.pi) % (2 * np.pi) - np.pi

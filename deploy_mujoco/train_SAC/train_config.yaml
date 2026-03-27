@@ -86,5 +86,5 @@ failure_flush_every_episodes: 50
 #log_name: "sac_classifier"
 log_name: "hhh0324_sac"
 
-# nohup python deploy/deploy_mujoco_go2/train_SAC/train.py >nohup-hhh0324_sac.out 2>&1 &
-# nohup python deploy/deploy_mujoco_go2/train_SAC/train.py >nohup_sac_classifier.out 2>&1 &
+# nohup python deploy_mujoco/train_SAC/train.py >nohup-hhh0324_sac.out 2>&1 &
+# nohup python deploy_mujoco/train_SAC/train.py >nohup_sac_classifier.out 2>&1 &

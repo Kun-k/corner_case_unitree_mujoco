@@ -1,6 +1,8 @@
 import os
-from typing import Optional, Tuple
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+from typing import Optional, Tuple
 import numpy as np
 import torch
 import torch.nn as nn

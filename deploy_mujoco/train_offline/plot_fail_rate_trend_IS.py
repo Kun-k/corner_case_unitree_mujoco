@@ -1,9 +1,10 @@
-import csv
 import os
-import pickle
 import sys
-from typing import List, Tuple
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+import csv
+import pickle
+from typing import List, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml

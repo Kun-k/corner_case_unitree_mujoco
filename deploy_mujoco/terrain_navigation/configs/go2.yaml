@@ -1,8 +1,8 @@
 ## Terrain navigation deployment config
 ## cmd is generated online from goal point and robot pose.
 
-policy_path: "deploy/pre_train/go2/terrain.pt"
-xml_path: "deploy/deploy_mujoco_go2/robots/go2/scene_terrain.xml"
+policy_path: "pre_train/go2/terrain.pt"
+xml_path: "deploy_mujoco/robots/go2/scene_terrain.xml"
 
 # Simulation setup
 simulation_duration: 60.0

@@ -1,7 +1,9 @@
-import argparse
 import os
-import time
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+import argparse
+import time
 import mujoco
 import mujoco.viewer
 import numpy as np
@@ -14,7 +16,6 @@ from deploy_mujoco.utils import (
     quat_to_heading_w,
     wrap_to_pi,
 )
-
 
 def update_command(data, cmd, heading_stiffness, heading_target):
     """Always use heading-based yaw control for navigation."""
@@ -128,7 +129,7 @@ def main():
     args = parser.parse_args()
 
     cfg_path = f"{os.path.dirname(os.path.realpath(__file__))}/configs/{args.config_file}"
-    with open(cfg_path, "r") as f:
+    with open(cfg_path, "r", encoding="utf-8") as f:
         cfg = yaml.load(f, Loader=yaml.FullLoader)
 
     policy_path = cfg["policy_path"]

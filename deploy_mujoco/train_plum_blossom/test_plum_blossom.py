@@ -1,6 +1,8 @@
 # TODO 梅花桩相关功能测试仍然不符合要求，需要继续修改
 # TODO setconst
-
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
 import numpy as np
 from deploy_mujoco.terrain_trainer import TerrainTrainer

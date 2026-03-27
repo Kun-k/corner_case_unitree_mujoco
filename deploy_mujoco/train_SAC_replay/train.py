@@ -1,16 +1,16 @@
-import csv
 import os
-import random
 import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
+import csv
+import random
 from datetime import datetime
 from copy import deepcopy
 from typing import Any, Dict, List, Optional, Sequence, Tuple
-
 import mujoco
 import numpy as np
 import torch
 import yaml
-
 from deploy_mujoco.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
 from deploy_mujoco.terrain_trainer import TerrainTrainer
 

@@ -1,8 +1,10 @@
-import os.path
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
+import os.path
 import numpy as np
 import yaml
-
 from deploy_mujoco.terrain_trainer import TerrainTrainer
 import argparse
 

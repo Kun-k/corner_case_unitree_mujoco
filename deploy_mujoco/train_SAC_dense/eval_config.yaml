@@ -19,4 +19,4 @@ use_curr_force: False  # 强制使用当前配置
 render: False
 save_non_failure_trajectories: false
 
-# nohup python deploy/deploy_mujoco_go2/train_SAC_dense/eval.py >nohup_sac_dense_eval.out 2>&1 &
+# nohup python deploy_mujoco/train_SAC_dense/eval.py >nohup_sac_dense_eval.out 2>&1 &

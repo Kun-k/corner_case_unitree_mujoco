@@ -1,5 +1,7 @@
-# 脚本顶部添加
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
 import csv
 import pickle
 import numpy as np

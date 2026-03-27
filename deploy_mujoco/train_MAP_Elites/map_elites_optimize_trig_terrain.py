@@ -1,9 +1,10 @@
-import json
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
+import json
 from dataclasses import dataclass
-
 import numpy as np
-
 from deploy_mujoco.terrain_trainer import TerrainTrainer
 import yaml
 
@@ -303,7 +304,7 @@ if __name__ == "__main__":
 
 
 """
-nohup python deploy/deploy_mujoco_go2/train_MAP_Elites/map_elites_optimize_trig_terrain.py \
+nohup python deploy_mujoco/train_MAP_Elites/map_elites_optimize_trig_terrain.py \
   --go2-task terrain \
   --go2-config go2.yaml \
   --terrain-config terrain_config.yaml \

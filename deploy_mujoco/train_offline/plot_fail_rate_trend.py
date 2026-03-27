@@ -1,17 +1,15 @@
-import csv
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
+import csv
 import pickle
 from typing import List, Tuple
-
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
-
 from deploy_mujoco.train_offline.data_io import get_log_dirs_and_output_from_train_cfg
-from deploy_mujoco.reward_recompute_utils import (
-    load_reward_cfg_from_yaml,
-    recompute_fail_flags_from_info,
-)
+from deploy_mujoco.reward_recompute_utils import load_reward_cfg_from_yaml, recompute_fail_flags_from_info
 
 
 RHW_KEYS = [

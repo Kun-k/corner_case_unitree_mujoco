@@ -1,19 +1,20 @@
-import time
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
+
+import time
 import mujoco.viewer
 import mujoco
 import numpy as np
 import torch
 import yaml
-import sys
 
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 from deploy_mujoco.utils import get_gravity_orientation, pd_control, quat_to_heading_w, wrap_to_pi
 
 
 class Go2Controller:
     def __init__(self, config_file):
-        with open(f"{os.path.dirname(os.path.realpath(__file__))}/configs/{config_file}", "r") as f:
+        with open(f"{os.path.dirname(os.path.realpath(__file__))}/configs/{config_file}", "r", encoding='utf-8') as f:
             self.config = yaml.load(f, Loader=yaml.FullLoader)
 
         self.policy = torch.jit.load(self.config['policy_path'])
