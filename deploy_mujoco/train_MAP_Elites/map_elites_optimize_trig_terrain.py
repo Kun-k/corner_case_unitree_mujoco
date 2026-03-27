@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
 import json
+import shutil
 from dataclasses import dataclass
 import numpy as np
 from deploy_mujoco.terrain_trainer import TerrainTrainer
@@ -184,8 +185,8 @@ def main():
     os.makedirs(log_dir, exist_ok=True)
     terrain_cfg_file = os.path.join(current_path, train_config["terrain_config"])
     train_cfg_file = os.path.join(current_path, train_config_file)
-    os.system(f"cp {terrain_cfg_file} {log_dir}")
-    os.system(f"cp {train_cfg_file} {log_dir}")
+    shutil.copy2(terrain_cfg_file, log_dir)
+    shutil.copy2(train_cfg_file, log_dir)
 
     rng = np.random.RandomState(train_config['seed'])
 

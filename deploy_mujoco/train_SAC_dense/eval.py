@@ -4,6 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."
 
 import csv
 import pickle
+import shutil
 import numpy as np
 from stable_baselines3 import SAC
 from deploy_mujoco.terrain_trainer import TerrainTrainer, TerrainGymEnv
@@ -72,8 +73,8 @@ def evaluate_policy(
     terrain_cfg_file = os.path.join(current_path, "../", terrain_cfg)
     # 复制文件到logs
     os.makedirs(paths["log_dir"], exist_ok=True)
-    os.system(f"cp {go2_cfg_file} {paths['log_dir']}")
-    os.system(f"cp {terrain_cfg_file} {paths['log_dir']}")
+    shutil.copy2(go2_cfg_file, paths["log_dir"])
+    shutil.copy2(terrain_cfg_file, paths["log_dir"])
 
     summary = {
         "episodes_evaluated": 0,

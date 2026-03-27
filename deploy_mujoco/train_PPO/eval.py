@@ -4,6 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."
 
 import csv
 import pickle
+import shutil
 import numpy as np
 import yaml
 from stable_baselines3 import PPO
@@ -69,9 +70,9 @@ def evaluate_policy(
     go2_cfg_file = os.path.join(current_path, "../", go2_cfg[0], "configs", go2_cfg[1])
     terrain_cfg_file = os.path.join(current_path, "../", terrain_cfg)
     if os.path.exists(go2_cfg_file):
-        os.system(f"cp {go2_cfg_file} {paths['log_dir']}")
+        shutil.copy2(go2_cfg_file, paths["log_dir"])
     if os.path.exists(terrain_cfg_file):
-        os.system(f"cp {terrain_cfg_file} {paths['log_dir']}")
+        shutil.copy2(terrain_cfg_file, paths["log_dir"])
 
     summary = {
         "episodes_evaluated": 0,

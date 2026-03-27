@@ -4,6 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."
 
 import json
 import math
+import shutil
 from dataclasses import dataclass
 
 import numpy as np
@@ -159,8 +160,8 @@ def main():
 
     log_dir = f"{current_path}/logs/{cfg['log_name']}"
     os.makedirs(log_dir, exist_ok=True)
-    os.system(f"cp {os.path.join(current_path, cfg['terrain_config'])} {log_dir}")
-    os.system(f"cp {os.path.join(current_path, train_config_file)} {log_dir}")
+    shutil.copy2(os.path.join(current_path, cfg["terrain_config"]), log_dir)
+    shutil.copy2(os.path.join(current_path, train_config_file), log_dir)
 
     trainer = TerrainTrainer([cfg['go2_task'], cfg['go2_config']], f"train_CMA_ES/{cfg['terrain_config']}")
     trainer.init_skip_time = 0

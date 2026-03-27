@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
 
 import pickle
+import shutil
 from datetime import datetime
 import numpy as np
 import torch
@@ -310,8 +311,8 @@ def main():
     terrain_cfg_file = os.path.join(current_path, train_config["terrain_config"])
     reward_cfg = _extract_reward_cfg_from_terrain_yaml(terrain_cfg_file)
     train_cfg_file = os.path.join(current_path, train_config_file)
-    os.system(f"cp {terrain_cfg_file} {log_dir}")
-    os.system(f"cp {train_cfg_file} {log_dir}")
+    shutil.copy2(terrain_cfg_file, log_dir)
+    shutil.copy2(train_cfg_file, log_dir)
 
     go2_cfg = [train_config["go2_task"], train_config["go2_config"]]
     terrain_cfg = f"train_SAC_dense/{train_config['terrain_config']}"
