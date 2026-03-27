@@ -8,7 +8,7 @@ from typing import Callable, Dict, Iterable, List, Optional, Sequence
 
 DEFAULT_FAIL_KEYS = (
     "fallen",
-    # "collided",
+    "collided",
     "base_collision",
     "thigh_collision",
     "stuck"

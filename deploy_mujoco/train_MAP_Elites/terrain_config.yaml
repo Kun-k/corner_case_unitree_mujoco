@@ -4,6 +4,13 @@ visualization:
   realtime_sim: False
 
 event_and_reward:
+  failure_flags:
+    fallen: True
+    collided: True
+    base_collision: True
+    thigh_collision: True
+    stuck: True
+
   # ===== 摔倒 =====
   fall_height_threshold: 0.2
   fall_angle_threshold: 1.3

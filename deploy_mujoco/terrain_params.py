@@ -428,7 +428,6 @@ class TerrainChanger:
         for row, col, original_height in restore_info:
             self.hfield[row, col] = original_height
 
-    # TODO 检查有没有多余的调用
     def enforce_safe_spawn_area(self, center_world=(0.0, 0.0), safe_radius_m=1.0, blend_radius_m=1.0, target_height=0.0):
         """
         Make a safe spawn area around center_world with smooth transition:
@@ -497,7 +496,6 @@ class TerrainChanger:
         )
         self._refresh_terrain_safe()
 
-    # TODO 后续考虑把三角函数组合的参数中，xy位置也可控（但是参数也会变多）
     def generate_trig_terrain(self, angle_array):
         angle_array = np.array(angle_array)
 

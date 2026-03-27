@@ -34,16 +34,22 @@ def _reward_item_enabled(reward_cfg: Dict, key: str) -> bool:
         return True
 
 
+def _is_fail_flag_enabled(reward_cfg: Dict, flag: str, reward_key: str) -> bool:
+    fail_cfg = reward_cfg.get("failure_flags", {}) if isinstance(reward_cfg, dict) else {}
+    if isinstance(fail_cfg, dict) and flag in fail_cfg:
+        return bool(fail_cfg.get(flag, True))
+    return _reward_item_enabled(reward_cfg, reward_key)
+
+
 def recompute_fail_flags_from_info(info: Dict, reward_cfg: Dict) -> Dict:
     info = info or {}
     reward_cfg = reward_cfg or {}
 
-    # TODO 这里强行将collided设置False了
-    fallen = bool(info.get("fallen", False)) and _reward_item_enabled(reward_cfg, "fall_reward")
-    collided = bool(info.get("collided", False)) and _reward_item_enabled(reward_cfg, "collision_reward")
-    base_collision = bool(info.get("base_collision", False)) and _reward_item_enabled(reward_cfg, "base_collision_reward")
-    thigh_collision = bool(info.get("thigh_collision", False)) and _reward_item_enabled(reward_cfg, "thigh_collision_reward")
-    stuck = bool(info.get("stuck", False)) and _reward_item_enabled(reward_cfg, "stuck_reward")
+    fallen = bool(info.get("fallen", False)) and _is_fail_flag_enabled(reward_cfg, "fallen", "fall_reward")
+    collided = bool(info.get("collided", False)) and _is_fail_flag_enabled(reward_cfg, "collided", "collision_reward")
+    base_collision = bool(info.get("base_collision", False)) and _is_fail_flag_enabled(reward_cfg, "base_collision", "base_collision_reward")
+    thigh_collision = bool(info.get("thigh_collision", False)) and _is_fail_flag_enabled(reward_cfg, "thigh_collision", "thigh_collision_reward")
+    stuck = bool(info.get("stuck", False)) and _is_fail_flag_enabled(reward_cfg, "stuck", "stuck_reward")
 
     any_fail = bool(fallen or collided or base_collision or thigh_collision or stuck)
     return {

@@ -73,9 +73,10 @@ class FailureRecordingWrapper(gym.Wrapper):
         self._curr_obs = np.asarray(next_obs, dtype=np.float32)
 
         if done:
+            # TODO
             has_failure = bool(
                 info["fallen"]
-                # or info_dict["collided"]
+                or info.get("collided", False)
                 or info["base_collision"]
                 or info["thigh_collision"]
                 or info["stuck"]

@@ -1,26 +1,33 @@
-# Dynamic terrain config used by frame-replay SAC training.
+# 动态地形配置文件，可用于动态交互  后续摩擦等参数加在这里
 terrain_action:
   terrain_types: ["bump"]
 
-  # bump center forward distance range (m)
+  # bump 圆心前向距离范围（米）
   min_forward_dist: 0.1
   max_forward_dist: 0.8
 
-  # bump lateral offset range (m)
+  # bump 横向偏移范围（米）
   max_lateral: 0.30
 
-  # bump radius range (m)
+  # bump 半径范围（米）
   radius_min: 0.1
   radius_max: 0.5
 
-  # bump maximum height (m)
-  max_bump_height: 0.1
+  # bump 最大高度（米）
+  max_bump_height: 0.10
 
-  # no terrain edit near robot root (m)
-  no_change_radius: 0.4
+  # 机器人附近地形不修改半径（米）
+  no_change_radius: 0.40
 
   terrain_decimation: 20
 
+
+# 初始化梅花桩参数，可用于xxx  # TODO
+plum_blossom:
+  foot_clearance_m: 0.05
+
+
+# 可视化配置
 visualization:
   render: False
   lock_camera: True
@@ -28,24 +35,34 @@ visualization:
 
 logging:
   # If true, info includes per-substep Go2 rollout traces (large payload).
-  enable_trace: True
+  enable_trace: False
 
+# 奖励和事件配置
 event_and_reward:
-  # fall
+  # 失败事件开关（可选关闭）
+  failure_flags:
+    fallen: False
+    collided: False
+    base_collision: True
+    thigh_collision: True
+    stuck: True
+
+  # reward
+  # ===== 摔倒 =====
   fall_height_threshold: 0.15
   fall_angle_threshold: 1.3
-  fall_reward: 5.0
+  fall_reward: 0.0
 
-  # collision
+  # ===== 碰撞 =====
   collision_force_threshold: 80.0
-  collision_reward: 0
+  collision_reward: 0.0
   base_collision_reward: 6.0
   thigh_collision_reward: 2.0
 
-  # tilt
-  tilt_reward_scale: 0
+  # ===== 失稳 =====
+  tilt_reward_scale: 0.0
 
-  # speed/stuck
+  # ===== 速度惩罚 =====
   target_speed: 1.0
   speed_reward_scale: 0
   stuck_speed_threshold: 0.05
@@ -53,12 +70,17 @@ event_and_reward:
 
   repeat_reward: False
 
+
+# 终止条件
 termination:
   terminate_on_fall: False
   terminate_on_base_collision: False
+  terminate_on_stuck: True
   terminate_on_terrain_edge: True
-  terrain_edge_margin: 1
+  terrain_edge_margin: 1.0
 
+
+# 训练观测值配置
 observation:
   include_last_action: False
   include_foot_contacts: False

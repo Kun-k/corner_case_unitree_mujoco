@@ -84,7 +84,7 @@ class FailureRecordingWrapper(gym.Wrapper):
         self._curr_chain.append(tr)
         self._curr_obs = np.asarray(next_obs, dtype=np.float32)
 
-        if done:
+        if done:  # TODO
             has_failure = bool(
                 info["fallen"]
                 # or info_dict["collided"]

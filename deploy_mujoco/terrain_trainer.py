@@ -54,6 +54,7 @@ class TerrainTrainer:
             self.terrain_config = yaml.load(f, Loader=yaml.FullLoader)
         self.terrain_decimation = self.terrain_config.get("terrain_action", {}).get("terrain_decimation", 0)
         self.terrain_types = self.terrain_config.get("terrain_action", {}).get("terrain_types", [])
+        self.failure_flags = self.terrain_config.get("event_and_reward", {}).get("failure_flags", {})
 
         # per-episode bookkeeping for terrain rewards
         # if repeat_reward is False (default), collision/fall rewards are given only once per episode
@@ -80,7 +81,7 @@ class TerrainTrainer:
         # Observation config for terrain agent.
         obs_cfg = self.terrain_config.get("observation", {})
         self.obs_include_last_action = bool(obs_cfg.get("include_last_action", True))
-        self.obs_include_foot_contacts = bool(obs_cfg.get("include_foot_contacts", True))  # TODO 暂定False，相关功能待验证，也可能不需要
+        self.obs_include_foot_contacts = bool(obs_cfg.get("include_foot_contacts", False))  # TODO 暂定False，相关功能待验证，也可能不需要
         self.obs_contact_force_threshold = float(obs_cfg.get("contact_force_threshold", 1.0))
         local_cfg = obs_cfg.get("local_height_map", {})
         self.local_map_enabled = bool(local_cfg.get("enabled", True))
@@ -203,7 +204,7 @@ class TerrainTrainer:
         self.terrain_changer._refresh_terrain_safe()
 
         if self.render:
-            self.viewer.update_hfield(self.terrain_changer.hfield_id)  # TODO 确保修改地形后一定update hfield
+            self.viewer.update_hfield(self.terrain_changer.hfield_id)
             self.viewer.sync()
 
         total_sim_steps = int(self.terrain_decimation * self.control_decimation)
@@ -268,8 +269,6 @@ class TerrainTrainer:
                 'actions': robot_actions,
             }
             info['terrain_action'] = np.asarray(terrain_action, dtype=np.float32).tolist()
-
-        # done = False  # TODO 是否需要根据fall和collision判断
 
         # print(f"step_counter: {self.step_counter}, robot_counter: {self.robot_counter}, terrain_reward: {terrain_reward}")
         # if terrain_reward != 0.0:
@@ -402,6 +401,12 @@ class TerrainTrainer:
         target_speed = float(self.terrain_config["event_and_reward"]["target_speed"])
         return base_z, lin_vel, float(roll), float(pitch), target_speed
 
+    def _is_failure_enabled(self, key: str) -> bool:
+        cfg = self.failure_flags if isinstance(self.failure_flags, dict) else {}
+        if key in cfg:
+            return bool(cfg.get(key, True))
+        return True
+
     def _get_ground_height_at_xy(self, x: float, y: float) -> float:
         """Estimate terrain surface height at world XY from the active hfield."""
         hfield_id = int(self.terrain_changer.hfield_id)
@@ -430,6 +435,9 @@ class TerrainTrainer:
         return center_z + z_scale * h
 
     def _is_fallen(self, base_z: float, roll: float, pitch: float) -> bool:
+        if not self._is_failure_enabled("fallen"):
+            return False
+
         x = float(self.data.qpos[0])
         y = float(self.data.qpos[1])
         ground_z = self._get_ground_height_at_xy(x, y)
@@ -449,6 +457,13 @@ class TerrainTrainer:
         return 0.0
 
     def _analyze_contacts(self) -> Tuple[bool, bool, bool]:
+        if not (
+            self._is_failure_enabled("collided")
+            or self._is_failure_enabled("base_collision")
+            or self._is_failure_enabled("thigh_collision")
+        ):
+            return False, False, False
+
         collided = False
         base_collision = False
         thigh_collision = False
@@ -475,6 +490,10 @@ class TerrainTrainer:
             if "thigh" in name1 or "thigh" in name2:
                 thigh_collision = True
 
+        collided = collided and self._is_failure_enabled("collided")
+        base_collision = base_collision and self._is_failure_enabled("base_collision")
+        thigh_collision = thigh_collision and self._is_failure_enabled("thigh_collision")
+
         return collided, base_collision, thigh_collision
 
     def _compute_collision_reward(self, collided: bool, base_collision: bool, thigh_collision: bool, repeat: bool) -> float:
@@ -498,6 +517,8 @@ class TerrainTrainer:
         return float(self.terrain_config["event_and_reward"]["speed_reward_scale"]) * speed_loss
 
     def _compute_stuck_reward(self, lin_vel: float, target_speed: float) -> Tuple[bool, float]:
+        if not self._is_failure_enabled("stuck"):
+            return False, 0.0
         stuck = lin_vel < float(self.terrain_config["event_and_reward"]["stuck_speed_threshold"]) and target_speed > 0.2
         if not stuck:
             return False, 0.0
@@ -522,10 +543,15 @@ class TerrainTrainer:
 
         return (abs(x - center_x) >= half_x) or (abs(y - center_y) >= half_y)
 
+    # TODO 增加stuck TODO 111
     def _compute_done(self, fallen: bool, base_collision: bool, out_of_terrain_edge: bool) -> bool:
-        if fallen and self.terrain_config["termination"]["terminate_on_fall"]:
+        if self._is_failure_enabled("fallen") and fallen and self.terrain_config["termination"]["terminate_on_fall"]:
             return True
-        if base_collision and self.terrain_config["termination"]["terminate_on_base_collision"]:
+        if self._is_failure_enabled("base_collision") and base_collision and self.terrain_config["termination"]["terminate_on_base_collision"]:
+            return True
+        if self._is_failure_enabled("fallen") and fallen and self.terrain_config["termination"]["terminate_on_fall"]:
+            return True
+        if self._is_failure_enabled("stuck") and base_collision and self.terrain_config["termination"]["terminate_on_stuck"]:
             return True
         if out_of_terrain_edge and self.terrain_config["termination"]["terminate_on_terrain_edge"]:
             return True

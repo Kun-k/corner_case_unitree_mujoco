@@ -107,7 +107,7 @@ class Go2Controller:
         # Load robot model
         m = mujoco.MjModel.from_xml_path(self.xml_path)
         d = mujoco.MjData(m)
-        m.opt.timestep = self.simulation_dt  # TODO 需要统一设置
+        m.opt.timestep = self.simulation_dt
 
         target_dof_pos = self.default_angles.copy()
 
@@ -142,7 +142,6 @@ class Go2Controller:
 
                 mujoco.mj_step(m, d)
 
-                # TODO 以下需统一设置
                 # Pick up changes to the physics state, apply perturbations, update options from GUI.
                 viewer.sync()
                 # Rudimentary time keeping, will drift relative to wall clock.
