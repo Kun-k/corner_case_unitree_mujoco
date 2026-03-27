@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainTrainer
+from deploy_mujoco.terrain_trainer import TerrainTrainer
 import yaml
 
 

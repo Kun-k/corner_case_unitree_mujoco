@@ -8,7 +8,7 @@ import numpy as np
 import torch
 import yaml
 
-from deploy.deploy_mujoco_go2.utils import (
+from deploy_mujoco.utils import (
     get_gravity_orientation,
     pd_control,
     quat_to_heading_w,

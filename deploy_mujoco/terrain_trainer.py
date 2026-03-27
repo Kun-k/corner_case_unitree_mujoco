@@ -10,12 +10,12 @@ try:
 except ImportError:
     import gym
     from gym.spaces import Box
-from deploy.deploy_mujoco_go2.utils import quat_to_rpy, pd_control
+from deploy_mujoco.utils import quat_to_rpy, pd_control
 import mujoco.viewer
 import time
 
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
-from deploy.deploy_mujoco_go2.terrain_params import TerrainChanger
+from deploy_mujoco.terrain_params import TerrainChanger
 
 
 class TerrainTrainer:
@@ -33,11 +33,11 @@ class TerrainTrainer:
     ):
 
         if go2_config_file[0] == "velocity":
-            from deploy.deploy_mujoco_go2.velocity.go2_controller import Go2Controller
+            from deploy_mujoco.velocity.go2_controller import Go2Controller
         elif go2_config_file[0] == "terrain":
-            from deploy.deploy_mujoco_go2.terrain.go2_controller import Go2Controller
+            from deploy_mujoco.terrain.go2_controller import Go2Controller
         else:
-            from deploy.deploy_mujoco_go2.velocity.go2_controller import Go2Controller
+            from deploy_mujoco.velocity.go2_controller import Go2Controller
 
         self.go2_controller = Go2Controller(go2_config_file[1])
 

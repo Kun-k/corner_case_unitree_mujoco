@@ -13,7 +13,7 @@ REPO_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", "..", ".."))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-from deploy.deploy_mujoco_go2.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file
+from deploy_mujoco.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file
 
 try:
     from sklearn.cluster import DBSCAN, KMeans

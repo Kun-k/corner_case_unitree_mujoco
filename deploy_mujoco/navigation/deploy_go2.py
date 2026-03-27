@@ -8,7 +8,7 @@ import yaml
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
-import deploy.deploy_mujoco_go2.utils as utils
+import deploy_mujoco.utils as utils
 
 # Implement the following functions refer in pose_2d_command.py
 def update_command(data, pos_command_w, heading_command_w):

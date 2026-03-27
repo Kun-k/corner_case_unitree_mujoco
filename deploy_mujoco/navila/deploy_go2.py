@@ -10,7 +10,7 @@ from typing import Tuple
 import torch.nn.functional as F
 
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
-import deploy.deploy_mujoco_go2.utils as utils
+import deploy_mujoco.utils as utils
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

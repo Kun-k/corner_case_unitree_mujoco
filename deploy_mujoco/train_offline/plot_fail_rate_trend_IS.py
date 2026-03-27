@@ -13,8 +13,8 @@ ROOT_DIR = os.path.normpath(os.path.join(CURRENT_DIR, "..", "..", ".."))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
-from deploy.deploy_mujoco_go2.train_offline.data_io import get_log_dirs_and_output_from_train_cfg
-from deploy.deploy_mujoco_go2.reward_recompute_utils import (
+from deploy_mujoco.train_offline.data_io import get_log_dirs_and_output_from_train_cfg
+from deploy_mujoco.reward_recompute_utils import (
     load_reward_cfg_from_yaml,
     recompute_fail_flags_from_info,
 )

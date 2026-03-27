@@ -17,10 +17,10 @@ try:
 except ImportError:
     import gym
 
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainTrainer, TerrainGymEnv
-from deploy.deploy_mujoco_go2.classifier_gate import ClassifierGate
-from deploy.deploy_mujoco_go2.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
-from deploy.deploy_mujoco_go2.reward_recompute_utils import (
+from deploy_mujoco.terrain_trainer import TerrainTrainer, TerrainGymEnv
+from deploy_mujoco.classifier_gate import ClassifierGate
+from deploy_mujoco.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
+from deploy_mujoco.reward_recompute_utils import (
     load_reward_cfg_from_yaml,
     recompute_reward_from_info,
 )

@@ -5,7 +5,7 @@ import mujoco
 import numpy as np
 import torch
 import yaml
-from deploy.deploy_mujoco_go2.utils import get_gravity_orientation, pd_control, quat_to_heading_w, wrap_to_pi
+from deploy_mujoco.utils import get_gravity_orientation, pd_control, quat_to_heading_w, wrap_to_pi
 
 
 def update_command(data, cmd, heading_stiffness, heading_target, heading_command=True):

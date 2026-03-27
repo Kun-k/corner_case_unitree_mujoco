@@ -5,7 +5,7 @@ from typing import Dict, List, Tuple
 import numpy as np
 import yaml
 
-from deploy.deploy_mujoco_go2.offline_data_utils import load_chains_from_pkl_file
+from deploy_mujoco.offline_data_utils import load_chains_from_pkl_file
 
 
 def _resolve_path(base_dir: str, p: str) -> str:

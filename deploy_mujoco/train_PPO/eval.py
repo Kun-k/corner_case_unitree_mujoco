@@ -6,8 +6,8 @@ import numpy as np
 import yaml
 from stable_baselines3 import PPO
 
-from deploy.deploy_mujoco_go2.classifier_gate import ClassifierGate
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainGymEnv, TerrainTrainer
+from deploy_mujoco.classifier_gate import ClassifierGate
+from deploy_mujoco.terrain_trainer import TerrainGymEnv, TerrainTrainer
 
 
 def _build_log_paths(log_dir):

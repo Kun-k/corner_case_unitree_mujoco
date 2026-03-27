@@ -9,8 +9,8 @@ import mujoco
 import numpy as np
 import yaml
 
-from deploy.deploy_mujoco_go2.offline_data_utils import collect_pkl_files
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainTrainer
+from deploy_mujoco.offline_data_utils import collect_pkl_files
+from deploy_mujoco.terrain_trainer import TerrainTrainer
 
 
 def _load_yaml(path: str) -> Dict:

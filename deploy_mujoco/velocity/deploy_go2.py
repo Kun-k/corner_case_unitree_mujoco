@@ -8,7 +8,7 @@ import yaml
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.."))
-from deploy.deploy_mujoco_go2.utils import get_gravity_orientation, pd_control, quat_to_heading_w, wrap_to_pi
+from deploy_mujoco.utils import get_gravity_orientation, pd_control, quat_to_heading_w, wrap_to_pi
 
 
 # Implement the following functions refer in velocity_command.py

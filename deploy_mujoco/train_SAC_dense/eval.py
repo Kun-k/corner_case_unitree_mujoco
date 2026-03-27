@@ -3,7 +3,7 @@ import csv
 import pickle
 import numpy as np
 from stable_baselines3 import SAC
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainTrainer, TerrainGymEnv
+from deploy_mujoco.terrain_trainer import TerrainTrainer, TerrainGymEnv
 import yaml
 
 

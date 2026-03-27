@@ -9,14 +9,14 @@ from stable_baselines3 import SAC
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv, VecCheckNan
 
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainTrainer, TerrainGymEnv
-from deploy.deploy_mujoco_go2.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
-from deploy.deploy_mujoco_go2.reward_recompute_utils import (
+from deploy_mujoco.terrain_trainer import TerrainTrainer, TerrainGymEnv
+from deploy_mujoco.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
+from deploy_mujoco.reward_recompute_utils import (
     load_reward_cfg_from_yaml,
     recompute_reward_from_info,
 )
-from deploy.deploy_mujoco_go2.train_SAC_dense.callbacks import DenseTrainingLogger
-from deploy.deploy_mujoco_go2.train_SAC_dense.dense_replay_buffer import FailureReplayBuffer
+from deploy_mujoco.train_SAC_dense.callbacks import DenseTrainingLogger
+from deploy_mujoco.train_SAC_dense.dense_replay_buffer import FailureReplayBuffer
 
 
 def _extract_reward_cfg_from_terrain_yaml(terrain_cfg_file: str):

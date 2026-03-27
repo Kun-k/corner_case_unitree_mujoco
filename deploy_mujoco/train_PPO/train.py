@@ -20,9 +20,9 @@ except ImportError:
     import gym
     from gym import spaces
 
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainTrainer, TerrainGymEnv
-from deploy.deploy_mujoco_go2.classifier_gate import ClassifierGate
-from deploy.deploy_mujoco_go2.offline_data_utils import _cap_consecutive_failures
+from deploy_mujoco.terrain_trainer import TerrainTrainer, TerrainGymEnv
+from deploy_mujoco.classifier_gate import ClassifierGate
+from deploy_mujoco.offline_data_utils import _cap_consecutive_failures
 
 
 th = torch

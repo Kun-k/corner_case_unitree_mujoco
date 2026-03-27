@@ -10,8 +10,8 @@ import numpy as np
 import torch
 import yaml
 
-from deploy.deploy_mujoco_go2.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainTrainer
+from deploy_mujoco.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
+from deploy_mujoco.terrain_trainer import TerrainTrainer
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 if CURRENT_DIR not in sys.path:

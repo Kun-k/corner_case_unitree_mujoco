@@ -1,6 +1,6 @@
 import numpy as np
 from stable_baselines3.common.buffers import ReplayBuffer
-from deploy.deploy_mujoco_go2.offline_data_utils import filter_chain_for_replay
+from deploy_mujoco.offline_data_utils import filter_chain_for_replay
 
 
 class FailureReplayBuffer(ReplayBuffer):

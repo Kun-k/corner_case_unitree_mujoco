@@ -10,9 +10,9 @@ from stable_baselines3 import SAC
 from stable_baselines3.common.logger import configure as configure_sb3_logger
 from stable_baselines3.common.vec_env import DummyVecEnv
 
-from deploy.deploy_mujoco_go2.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
-from deploy.deploy_mujoco_go2.reward_recompute_utils import load_reward_cfg_from_yaml, recompute_reward_from_info
-from deploy.deploy_mujoco_go2.terrain_trainer import TerrainGymEnv, TerrainTrainer
+from deploy_mujoco.offline_data_utils import collect_pkl_files, load_chains_from_pkl_file, filter_chain_for_replay
+from deploy_mujoco.reward_recompute_utils import load_reward_cfg_from_yaml, recompute_reward_from_info
+from deploy_mujoco.terrain_trainer import TerrainGymEnv, TerrainTrainer
 
 
 def configure_torch_runtime(cfg: dict) -> None:
