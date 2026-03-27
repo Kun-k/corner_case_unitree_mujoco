@@ -1,11 +1,11 @@
 #policy: "sac_0312-rew1-preload"  # random表示随机策略，其余情况下则查找训练好的模型
 #checkpoint: "checkpoint_step_40000"
 
-policy: "gogogo0316_preload"
-checkpoint: "checkpoint_step_15000"
+#policy: "gogogo0316_preload"
+#checkpoint: "checkpoint_step_15000"
 
-#policy: "random"
-#checkpoint: ""
+policy: "random"
+checkpoint: ""
 
 #policy: "sac_0310-rew2"  # random表示随机策略，其余情况下则查找训练好的模型
 #checkpoint: "checkpoint_step_22000"
@@ -22,7 +22,7 @@ seed: 122
 #log_name: "random_eval_0317-7"
 #log_name: "debug"
 #log_name: "sac_eval_gogogo0316_preload"
-log_name: "sac_eval_weighted30"
+log_name: "random_eval_0327"
 
 use_curr_force: False  # 强制使用当前配置
 

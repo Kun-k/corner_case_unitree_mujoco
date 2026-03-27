@@ -2,6 +2,7 @@ import csv
 import os
 import random
 import sys
+from datetime import datetime
 from copy import deepcopy
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -398,8 +399,10 @@ def train(cfg: Dict[str, Any]) -> None:
     _configure_torch_runtime(cfg)
     _set_seed(int(cfg.get("seed", 0)))
 
-    log_dir = os.path.join(CURRENT_DIR, "train_logs", str(cfg.get("log_name", "sac_replay_default")))
+    run_name = f"{str(cfg.get('log_name', 'sac_replay_default'))}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = os.path.join(CURRENT_DIR, "train_logs", run_name)
     os.makedirs(log_dir, exist_ok=True)
+    print(f"[train_SAC_replay] run_dir: {log_dir}")
     checkpoint_dir = os.path.join(log_dir, "checkpoints")
     os.makedirs(checkpoint_dir, exist_ok=True)
 

@@ -1,6 +1,7 @@
 import csv
 import os
 import shutil
+from datetime import datetime
 from typing import Dict, List, Optional
 
 import numpy as np
@@ -177,8 +178,10 @@ def train_sac_offline(cfg: dict) -> None:
     configure_torch_runtime(cfg)
 
     current_path = os.path.dirname(os.path.realpath(__file__))
-    log_dir = os.path.join(current_path, "train_logs", str(cfg.get("log_name", "sac_offline")))
+    run_name = f"{str(cfg.get('log_name', 'sac_offline'))}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = os.path.join(current_path, "train_logs", run_name)
     os.makedirs(log_dir, exist_ok=True)
+    print(f"[train_SAC_offline] run_dir: {log_dir}")
     checkpoint_dir = os.path.join(log_dir, "checkpoints")
     os.makedirs(checkpoint_dir, exist_ok=True)
 

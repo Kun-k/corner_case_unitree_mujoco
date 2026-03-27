@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -239,8 +240,10 @@ def main():
 
     classifier_cfg = cfg.get("classifier", {}) if isinstance(cfg, dict) else {}
     classifier_log_name = classifier_cfg.get("log_name", cfg.get("log_name", "offline_default"))
-    log_dir = os.path.join(base_dir, "classifier", str(classifier_log_name))
+    run_name = f"{str(classifier_log_name)}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = os.path.join(base_dir, "classifier", run_name)
     os.makedirs(log_dir, exist_ok=True)
+    print(f"[train_classifier] run_dir: {log_dir}")
     checkpoint_dir = os.path.join(log_dir, "checkpoints")
     os.makedirs(checkpoint_dir, exist_ok=True)
 

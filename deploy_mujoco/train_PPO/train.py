@@ -2,6 +2,7 @@ import csv
 import os
 import pickle
 import shutil
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -103,7 +104,7 @@ class TrainingLoggerCallback(BaseCallback):
         save_every_steps: int = 2000,
         smooth_window: int = 20,
         checkpoint_every_steps: int = 10000,
-        checkpoint_dir: str | None = None,
+        checkpoint_dir: str = None,
         verbose: int = 0,
     ):
         super().__init__(verbose)
@@ -471,8 +472,10 @@ def main():
 
     configure_torch_runtime(train_config)
 
-    log_dir = os.path.join(current_path, "train_logs", train_config["log_name"])
+    run_name = f"{train_config['log_name']}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = os.path.join(current_path, "train_logs", run_name)
     os.makedirs(log_dir, exist_ok=True)
+    print(f"[train_PPO] run_dir: {log_dir}")
 
     terrain_cfg_file = os.path.join(current_path, train_config["terrain_config"])
     train_cfg_file = os.path.join(current_path, train_config_file)

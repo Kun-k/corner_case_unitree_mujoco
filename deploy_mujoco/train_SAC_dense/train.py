@@ -1,5 +1,6 @@
 import os
 import pickle
+from datetime import datetime
 
 import numpy as np
 import torch
@@ -304,8 +305,10 @@ def main():
 
     configure_torch_runtime(train_config)
 
-    log_dir = f"{current_path}/train_logs/{train_config['log_name']}"
+    run_name = f"{train_config['log_name']}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    log_dir = f"{current_path}/train_logs/{run_name}"
     os.makedirs(log_dir, exist_ok=True)
+    print(f"[train_SAC_dense] run_dir: {log_dir}")
     terrain_cfg_file = os.path.join(current_path, train_config["terrain_config"])
     reward_cfg = _extract_reward_cfg_from_terrain_yaml(terrain_cfg_file)
     train_cfg_file = os.path.join(current_path, train_config_file)
