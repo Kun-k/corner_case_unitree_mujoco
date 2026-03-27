@@ -1,0 +1,36 @@
+go2_task: "terrain"
+go2_config: "go2.yaml"
+
+terrain_config: "terrain_config.yaml"
+
+mode_y: 10
+mode_x: 10
+seed: 0
+
+max_robot_steps: 350
+safe_radius_m: 1.0
+blend_radius_m: 2.0
+
+bins_x: 20
+bins_y: 20
+desc_min_x: 0.0
+desc_max_x: 0.2
+desc_min_y: 0.0
+desc_max_y: 0.3
+
+init_random_ratio: 0.35
+sigma_theta: 0.35
+sigma_alt: 0.45
+
+iterations: 10
+save_every: 5
+
+# Constraint objective: maximize failure-prone score while minimizing amplitude
+fail_weight: 20.0
+reward_weight: 1.0
+amp_weight: 3.0
+amp_hinge_weight: 10.0
+target_amp_mean: 0.20
+
+log_name: "map_elites_constraint_logs_0310"
+

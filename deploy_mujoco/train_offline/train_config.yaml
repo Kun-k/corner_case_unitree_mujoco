@@ -1,0 +1,100 @@
+log_name: "classifier_training_0313"
+seed: 0
+device: "cuda:3"  # auto | cpu | cuda | cuda:0
+
+torch_deterministic: false
+cudnn_benchmark: true
+allow_tf32: true
+torch_num_threads: 0
+
+
+# Reward config path for fail/reward recomputation.
+# If terrain_config_path is set, it has higher priority.
+terrain_config: "terrain_config.yaml"
+
+
+# Folders containing collision_failures.pkl and failure_summary.csv.
+# Supports absolute path or path relative to this file.
+log_dirs:
+  - "../train_SAC/eval_logs/random_eval_0317-1"
+  - "../train_SAC/eval_logs/random_eval_0317-2"
+  - "../train_SAC/eval_logs/random_eval_0317-3"
+  - "../train_SAC/eval_logs/random_eval_0317-4"
+
+#  - "../train_SAC/eval_logs/random_eval_0311-1"
+#  - "../train_SAC/eval_logs/random_eval_0311-2"
+#  - "../train_SAC/eval_logs/random_eval_0311-3"
+#  - "../train_SAC/eval_logs/random_eval_0311-4"
+#  - "../train_SAC/eval_logs/random_eval_0311-5"
+#  - "../train_SAC/eval_logs/random_eval_0311-6"
+#  - "../train_SAC/eval_logs/random_eval_0311-7"
+#  - "../train_SAC/eval_logs/random_eval_0311-8"
+#  - "../train_SAC/eval_logs/random_eval_0311-1"
+#  - "../train_SAC/eval_logs/random_eval_0311-2"
+#  - "../train_SAC/eval_logs/random_eval_0311-3"
+#  - "../train_SAC/eval_logs/random_eval_0311-4"
+#  - "../train_SAC/eval_logs/random_eval_0311-5"
+#  - "../train_SAC/eval_logs/random_eval_0311-6"
+#  - "../train_SAC/eval_logs/random_eval_0311-7"
+#  - "../train_SAC/eval_logs/random_eval_0311-8"
+#  - "../train_SAC/eval_logs/random_eval_0311-1"
+#  - "../train_SAC/eval_logs/random_eval_0311-2"
+#  - "../train_SAC/eval_logs/random_eval_0311-3"
+#  - "../train_SAC/eval_logs/random_eval_0311-4"
+#  - "../train_SAC/eval_logs/random_eval_0311-5"
+#  - "../train_SAC/eval_logs/random_eval_0311-6"
+#  - "../train_SAC/eval_logs/random_eval_0311-7"
+#  - "../train_SAC/eval_logs/random_eval_0311-8"
+#  - "../train_SAC/eval_logs/random_eval_0311-1"
+#  - "../train_SAC/eval_logs/random_eval_0311-2"
+#  - "../train_SAC/eval_logs/random_eval_0311-3"
+#  - "../train_SAC/eval_logs/random_eval_0311-4"
+#  - "../train_SAC/eval_logs/random_eval_0311-5"
+#  - "../train_SAC/eval_logs/random_eval_0311-6"
+#  - "../train_SAC/eval_logs/random_eval_0311-7"
+#  - "../train_SAC/eval_logs/random_eval_0311-8"
+#  - "../train_SAC/eval_logs/random_eval_0311-1"
+#  - "../train_SAC/eval_logs/random_eval_0311-2"
+#  - "../train_SAC/eval_logs/random_eval_0311-3"
+#  - "../train_SAC/eval_logs/random_eval_0311-4"
+#  - "../train_SAC/eval_logs/random_eval_0311-5"
+#  - "../train_SAC/eval_logs/random_eval_0311-6"
+#  - "../train_SAC/eval_logs/random_eval_0311-7"
+#  - "../train_SAC/eval_logs/random_eval_0311-8"
+#  - "../train_SAC/eval_logs/random_eval_0311-1"
+#  - "../train_SAC/eval_logs/random_eval_0311-2"
+#  - "../train_SAC/eval_logs/random_eval_0311-3"
+#  - "../train_SAC/eval_logs/random_eval_0311-4"
+#  - "../train_SAC/eval_logs/random_eval_0311-5"
+#  - "../train_SAC/eval_logs/random_eval_0311-6"
+#  - "../train_SAC/eval_logs/random_eval_0311-7"
+#  - "../train_SAC/eval_logs/random_eval_0311-8"
+#  - "../train_SAC/eval_logs/random_eval_0311-9-withnonfailure"
+
+
+# When consecutive fail+stuck frames appear, keep only the first K fail frames.
+consecutive_fail_keep_k: 1
+
+
+states_logs:
+  # default output dir: ./states_logs/<log_name>
+  log_name: "sac-0312-rew1-preload"
+
+
+classifier:
+  # default output dir: ./classifier/<log_name>
+  log_name: "classifier_0316"
+  concat_action_to_obs: False  # true: classifier input = obs + action, false: obs only
+  # Mark failure frame and its previous k frames as positive labels.
+  fail_preceding_k: 10
+  val_split: 0.1
+  test_split: 0.1
+  epochs: 1000
+  batch_size: 512
+  learning_rate: 0.0005
+  hidden_dim: 128
+  pos_weight: 1.6
+
+  save_every_epochs: 10
+  checkpoint_every_epochs: 10
+  smooth_window: 10

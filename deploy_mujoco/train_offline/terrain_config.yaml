@@ -1,0 +1,23 @@
+event_and_reward:
+  # reward
+  # ===== 摔倒 =====
+  fall_height_threshold: 0.15
+  fall_angle_threshold: 1.3
+  fall_reward: 5.0
+
+  # ===== 碰撞 =====
+  collision_force_threshold: 80.0
+  collision_reward: 0
+  base_collision_reward: 6.0
+  thigh_collision_reward: 2.0
+
+  # ===== 失稳 =====
+  tilt_reward_scale: 0
+
+  # ===== 速度惩罚 =====
+  target_speed: 1.0
+  speed_reward_scale: 0
+  stuck_speed_threshold: 0.05
+  stuck_reward: 4.0
+
+  repeat_reward: False

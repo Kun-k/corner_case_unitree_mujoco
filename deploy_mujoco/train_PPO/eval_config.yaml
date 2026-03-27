@@ -1,0 +1,25 @@
+policy: "random"  # random 表示随机策略，其余情况下读取 train_logs/<policy>/<checkpoint>
+checkpoint: "model.zip"
+
+go2_task: "terrain"
+go2_config: "go2.yaml"
+terrain_config: "terrain_config.yaml"
+
+episodes: 200
+max_episode_steps: 35
+seed: 4
+
+log_name: "ppo_eval_default"
+use_curr_force: false
+
+render: True
+save_non_failure_trajectories: False
+
+classifier_gate:
+  enabled: false
+  checkpoint_path: "../train_offline/train_logs/offline_0312_hybrid_ppo/classifier/model_final.pt"
+  threshold: 0.55
+  concat_action_to_obs: true
+  hidden_dim: 1024
+  device: "cpu"
+

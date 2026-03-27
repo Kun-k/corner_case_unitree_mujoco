@@ -1,0 +1,35 @@
+visualization:
+  render: True
+  lock_camera: True
+  realtime_sim: False
+
+event_and_reward:
+  # ===== 摔倒 =====
+  fall_height_threshold: 0.2
+  fall_angle_threshold: 1.3
+  fall_reward: 10.0
+
+  # ===== 碰撞 =====
+  collision_force_threshold: 80.0
+  collision_reward: 0.0
+  base_collision_reward: 6.0
+  thigh_collision_reward: 2.0
+
+  # ===== 失稳 =====
+  tilt_reward_scale: 0.0
+
+  # ===== 速度惩罚 =====
+  target_speed: 0.5
+  speed_reward_scale: 0.0
+  stuck_speed_threshold: 0.05
+  stuck_reward: 4.0
+
+  repeat_reward: False
+
+
+# 终止条件
+termination:
+  terminate_on_fall: True
+  terminate_on_base_collision: False
+  terminate_on_terrain_edge: True
+  terrain_edge_margin: 1

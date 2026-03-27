@@ -1,0 +1,70 @@
+# Dynamic terrain config used by frame-replay SAC training.
+terrain_action:
+  terrain_types: ["bump"]
+
+  # bump center forward distance range (m)
+  min_forward_dist: 0.1
+  max_forward_dist: 0.8
+
+  # bump lateral offset range (m)
+  max_lateral: 0.30
+
+  # bump radius range (m)
+  radius_min: 0.1
+  radius_max: 0.5
+
+  # bump maximum height (m)
+  max_bump_height: 0.1
+
+  # no terrain edit near robot root (m)
+  no_change_radius: 0.4
+
+  terrain_decimation: 20
+
+visualization:
+  render: False
+  lock_camera: True
+  realtime_sim: False
+
+logging:
+  # If true, info includes per-substep Go2 rollout traces (large payload).
+  enable_trace: True
+
+event_and_reward:
+  # fall
+  fall_height_threshold: 0.15
+  fall_angle_threshold: 1.3
+  fall_reward: 5.0
+
+  # collision
+  collision_force_threshold: 80.0
+  collision_reward: 0
+  base_collision_reward: 6.0
+  thigh_collision_reward: 2.0
+
+  # tilt
+  tilt_reward_scale: 0
+
+  # speed/stuck
+  target_speed: 1.0
+  speed_reward_scale: 0
+  stuck_speed_threshold: 0.05
+  stuck_reward: 4.0
+
+  repeat_reward: False
+
+termination:
+  terminate_on_fall: False
+  terminate_on_base_collision: False
+  terminate_on_terrain_edge: True
+  terrain_edge_margin: 1
+
+observation:
+  include_last_action: False
+  include_foot_contacts: False
+  contact_force_threshold: 1.0
+  local_height_map:
+    enabled: true
+    size_m: 0.8
+    resolution_m: 0.2
+

@@ -1,0 +1,65 @@
+## Terrain navigation deployment config
+## cmd is generated online from goal point and robot pose.
+
+policy_path: "deploy/pre_train/go2/terrain.pt"
+xml_path: "deploy/deploy_mujoco_go2/robots/go2/scene_terrain.xml"
+
+# Simulation setup
+simulation_duration: 60.0
+simulation_dt: 0.002
+control_decimation: 10
+policy_decimation: 20
+lock_camera: True
+
+# PD gains
+kps: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+kds: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+default_angles: [0.1, 0.8, -1.5, -0.1, 0.8, -1.5,
+                 0.1, 1.0, -1.5, -0.1, 1.0, -1.5]
+
+# Observation/action scales (must match training)
+lin_vel_scale: 2.0
+ang_vel_scale: 0.25
+dof_pos_scale: 1.0
+dof_vel_scale: 0.05
+action_scale: 0.25
+cmd_scale: [2.0, 2.0, 0.25]
+num_actions: 12
+num_obs: 48
+
+# Heading control is fixed True in terrain_navigation/deploy_go2.py
+heading_stiffness: 1.0
+
+# Goal navigation settings
+# mode: list | random
+goal_mode: "list"
+
+# For list mode:
+# item format: [x, y] or [x, y, heading]
+goal_list:
+  - [5, 0.0]
+  - [5, 5]
+  - [0.0, 5]
+  - [0.0, 0.0]
+goal_list_loop: True
+
+# For random mode:
+goal_random:
+  x_range: [-1.5, 1.5]
+  y_range: [-1.5, 1.5]
+goal_random_seed: 0
+
+# Goal switching
+# consider reached when distance <= goal_reach_dist for goal_reach_hold_steps control cycles
+goal_reach_dist: 0.2
+goal_reach_hold_steps: 3
+
+# Convert position error to world velocity command (P controller)
+goal_kp_pos: 1.2
+goal_kp_heading: 0.2
+goal_max_lin_vel_x: 1.0
+goal_max_lin_vel_y: 1.0
+
+init_skip_time: 2
+

@@ -1,0 +1,25 @@
+go2_task: "terrain"
+go2_config: "go2.yaml"
+
+terrain_config: "terrain_config.yaml"
+
+mode_y: 10
+mode_x: 10
+generations: 10
+popsize: 8
+sigma: 0.8
+seed: 0
+
+max_robot_steps: 350
+safe_radius_m: 1.0
+blend_radius_m: 2.0
+
+# Constraint objective: maximize failure-prone score while minimizing amplitude
+fail_weight: 20.0
+reward_weight: 1.0
+amp_weight: 3.0
+amp_hinge_weight: 10.0
+target_amp_mean: 0.20
+
+log_name: "cmaes_constraint_logs_0310"
+
