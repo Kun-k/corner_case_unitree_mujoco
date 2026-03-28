@@ -9,7 +9,7 @@ from stable_baselines3.common.callbacks import BaseCallback
 
 
 class DenseTrainingLogger(BaseCallback):
-    def __init__(self, out_dir: str, save_every_steps: int = 2000, smooth_window: int = 20, checkpoint_every_steps: int = 10000, checkpoint_start_after_steps: int = 0, checkpoint_dir: str | None = None, verbose: int = 0):
+    def __init__(self, out_dir: str, save_every_steps: int = 2000, smooth_window: int = 20, checkpoint_every_steps: int = 10000, checkpoint_start_after_steps: int = 0, checkpoint_dir: str = None, verbose: int = 0):
         super().__init__(verbose)
         self.out_dir = out_dir
         self.save_every_steps = int(max(1, save_every_steps))
