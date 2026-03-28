@@ -1,0 +1,90 @@
+go2_task: "terrain"
+go2_config: "go2.yaml"
+terrain_config: "terrain_config.yaml"
+
+total_timesteps: 80000
+max_episode_steps: 35
+
+# Device / Torch runtime
+# auto | cpu | cuda | cuda:0
+device: "cuda:0"
+seed: 0
+torch_deterministic: false
+cudnn_benchmark: true
+allow_tf32: true
+torch_num_threads: 0
+
+# SAC hyperparameters
+learning_rate: 0.0003
+batch_size: 256
+buffer_size: 1000000
+train_freq: 1
+gradient_steps: 1
+tau: 0.005
+gamma: 0.99
+
+# Logging / plotting / checkpoint intervals
+plot_save_every_steps: 2000
+# Moving average window for reward smoothing.
+plot_smooth_window: 20
+
+# Checkpoint
+# Save model checkpoint every N timesteps.
+checkpoint_every_steps: 200
+
+# Optional warm-starts
+preload_model_path: ""
+preload_pkl_paths: [
+#  "../train_SAC/eval_logs/random_eval_0311-1",
+#  "../train_SAC/eval_logs/random_eval_0311-2",
+#  "../train_SAC/eval_logs/random_eval_0311-3",
+#  "../train_SAC/eval_logs/random_eval_0311-4",
+#  "../train_SAC/eval_logs/random_eval_0311-5",
+#  "../train_SAC/eval_logs/random_eval_0311-6",
+#  "../train_SAC/eval_logs/random_eval_0311-7",
+#  "../train_SAC/eval_logs/random_eval_0311-8",
+
+#  "../train_SAC/eval_logs/random_eval_0317-1",
+#  "../train_SAC/eval_logs/random_eval_0317-2",
+#  "../train_SAC/eval_logs/random_eval_0317-3",
+#  "../train_SAC/eval_logs/random_eval_0317-4",
+#  "../train_SAC/eval_logs/random_eval_0317-5",
+#  "../train_SAC/eval_logs/random_eval_0317-6",
+#  "../train_SAC/eval_logs/random_eval_0317-7",
+#  "../train_SAC/eval_logs/random_eval_0317-1",
+#  "../train_SAC/eval_logs/random_eval_0317-2",
+#  "../train_SAC/eval_logs/random_eval_0317-3",
+#  "../train_SAC/eval_logs/random_eval_0317-4",
+#  "../train_SAC/eval_logs/random_eval_0317-5",
+#  "../train_SAC/eval_logs/random_eval_0317-6",
+#  "../train_SAC/eval_logs/random_eval_0317-7",
+]
+
+learning_starts: 100
+
+# Offline data loading filter for replay preload:
+# keep only first K frames in each consecutive fail+stuck run, then wait until non-stuck/fail appears.
+# 0 means do not trim.
+consecutive_fail_keep_k: 1
+
+# Optional classifier gate for action source selection during training.
+# If enabled: classifier score > threshold => use SAC action, else random action.
+# Only SAC-selected transitions are inserted into replay buffer.
+classifier_gate:
+  enabled: false
+  checkpoint_path: "../train_offline/classifier/classifier_0316/checkpoint_epoch_860.pt"
+  threshold: 0.55
+  concat_action_to_obs: false
+  hidden_dim: 128
+  device: "cuda:0"
+  min_rl_buffer_size_for_update: 100
+
+# Train-time failure recording
+failure_pkl_name: "collision_failures.pkl"
+failure_flush_every_episodes: 50
+
+#log_name: "sac_classifier"
+log_name: "sac_0327"
+
+# nohup python deploy_mujoco/train_SAC/train.py >nohup-hhh0324_sac.out 2>&1 &
+# nohup python deploy_mujoco/train_SAC/train.py >nohup_sac_classifier.out 2>&1 &
