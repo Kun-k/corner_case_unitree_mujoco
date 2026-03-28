@@ -15,8 +15,17 @@ except ImportError:
 from deploy_mujoco.utils import quat_to_rpy, pd_control
 import mujoco.viewer
 import time
-
 from deploy_mujoco.terrain_params import TerrainChanger
+import inspect
+
+
+def safe_call(func, *args, **kwargs):
+    sig = inspect.signature(func)
+    valid_kwargs = {
+        k: v for k, v in kwargs.items()
+        if k in sig.parameters
+    }
+    return func(*args, **valid_kwargs)
 
 
 class TerrainTrainer:
@@ -35,6 +44,8 @@ class TerrainTrainer:
 
         if go2_config_file[0] == "terrain":
             from deploy_mujoco.terrain.go2_controller import Go2Controller
+        elif go2_config_file[0] == "terrain_g1":
+            from deploy_mujoco.terrain_g1.g1_controller import G1Controller as Go2Controller
         else:
             from deploy_mujoco.terrain.go2_controller import Go2Controller
 
@@ -142,10 +153,12 @@ class TerrainTrainer:
         target_dof_pos = self.go2_controller.default_angles.copy()
         total_sim_steps = int(self.init_skip_time / self.model.opt.timestep) + self.init_skip_frame  # 2s保护时间 + 10帧控制空窗期
         for sim_i in range(total_sim_steps):
+            self.robot_counter += 1
             step_start = time.time()
             # at control boundaries compute new target and tau
             if sim_i >= 10 and sim_i % int(self.control_decimation) == 0:
-                target_dof_pos = self.go2_controller.compute_action(self.data)
+                target_dof_pos = safe_call(self.go2_controller.compute_action, d=self.data, counter=self.robot_counter)
+                # target_dof_pos = self.go2_controller.compute_action(self.data)
             tau = pd_control(target_dof_pos, self.data.qpos[7:], self.go2_controller.kps,
                              np.zeros_like(self.go2_controller.kds), self.data.qvel[6:], self.go2_controller.kds)
             self.data.ctrl[:] = tau
@@ -189,12 +202,14 @@ class TerrainTrainer:
         if self.trace_enabled:
             # Full robot rollout trace in this terrain step:
             # states: [s0, s1, ..., sN] ; actions: [a0, ..., a(N-1)]
+            robot_obs = safe_call(self.go2_controller.get_observation, d=self.data, counter=self.robot_counter)
             robot_states = [
                 {
                     'sim_i': -1,
                     'qpos': np.asarray(self.data.qpos, dtype=np.float64).tolist(),
                     'qvel': np.asarray(self.data.qvel, dtype=np.float64).tolist(),
-                    'robot_obs': np.asarray(self.go2_controller.get_observation(self.data), dtype=np.float32).tolist(),
+                    # 'robot_obs': np.asarray(self.go2_controller.get_observation(self.data), dtype=np.float32).tolist(),
+                    'robot_obs': np.asarray(robot_obs, dtype=np.float32).tolist(),
                 }
             ]
             robot_actions = []
@@ -216,7 +231,8 @@ class TerrainTrainer:
             step_start = time.time()
             # at control boundaries compute new target and tau
             if sim_i % int(self.control_decimation) == 0:
-                target_dof_pos = self.go2_controller.compute_action(self.data)
+                target_dof_pos = safe_call(self.go2_controller.compute_action, d=self.data, counter=self.robot_counter)
+                # target_dof_pos = self.go2_controller.compute_action(self.data)
             tau = pd_control(target_dof_pos, self.data.qpos[7:], self.go2_controller.kps, np.zeros_like(self.go2_controller.kds), self.data.qvel[6:], self.go2_controller.kds)
 
             if self.trace_enabled:
@@ -233,12 +249,14 @@ class TerrainTrainer:
             mujoco.mj_step(self.model, self.data)
 
             if self.trace_enabled:
+                robot_obs = safe_call(self.go2_controller.get_observation, d=self.data, counter=self.robot_counter)
                 robot_states.append(
                     {
                         'sim_i': int(sim_i),
                         'qpos': np.asarray(self.data.qpos, dtype=np.float64).tolist(),
                         'qvel': np.asarray(self.data.qvel, dtype=np.float64).tolist(),
-                        'robot_obs': np.asarray(self.go2_controller.get_observation(self.data), dtype=np.float32).tolist(),
+                        # 'robot_obs': np.asarray(self.go2_controller.get_observation(self.data), dtype=np.float32).tolist(),
+                        'robot_obs': np.asarray(robot_obs, dtype=np.float32).tolist(),
                     }
                 )
 
@@ -284,7 +302,8 @@ class TerrainTrainer:
             step_start = time.time()
             # at control boundaries compute new target and tau
             if sim_i % int(self.control_decimation) == 0:
-                target_dof_pos = self.go2_controller.compute_action(self.data)
+                target_dof_pos = safe_call(self.go2_controller.compute_action, d=self.data, counter=self.robot_counter)
+                # target_dof_pos = self.go2_controller.compute_action(self.data)
             tau = pd_control(target_dof_pos, self.data.qpos[7:], self.go2_controller.kps, np.zeros_like(self.go2_controller.kds), self.data.qvel[6:], self.go2_controller.kds)
 
             self.data.ctrl[:] = tau
@@ -376,8 +395,9 @@ class TerrainTrainer:
 
     def get_terrain_observation(self):
         """Terrain obs = robot obs + optional foot contacts + optional local map + optional last terrain action."""
-        robot_obs = self.go2_controller.get_observation(self.data).astype(np.float32)
-        robot_obs = robot_obs[:len(robot_obs) - self.go2_controller.num_actions]  # TODO 去掉robot obs中的last action部分
+        robot_obs = safe_call(self.go2_controller.get_observation_without_prev_action, d=self.data, counter=self.robot_counter)
+        # robot_obs = self.go2_controller.get_observation(self.data).astype(np.float32)
+        # robot_obs = robot_obs[:len(robot_obs) - self.go2_controller.num_actions]  # TODO 去掉robot obs中的last action部分
         chunks = [robot_obs]
 
         if self.obs_include_foot_contacts:

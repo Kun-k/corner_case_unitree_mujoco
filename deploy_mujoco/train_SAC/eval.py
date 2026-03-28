@@ -11,6 +11,7 @@ from stable_baselines3 import SAC
 from deploy_mujoco.terrain_trainer import TerrainTrainer, TerrainGymEnv
 from deploy_mujoco.classifier_gate import ClassifierGate
 import yaml
+import shutil
 
 
 def _build_log_paths(log_dir):
@@ -94,8 +95,8 @@ def evaluate_policy(
     terrain_cfg_file = os.path.join(current_path, "../", terrain_cfg)
     # 复制文件到logs
     os.makedirs(paths["log_dir"], exist_ok=True)
-    os.system(f"cp {go2_cfg_file} {paths['log_dir']}")
-    os.system(f"cp {terrain_cfg_file} {paths['log_dir']}")
+    shutil.copy2(go2_cfg_file, paths["log_dir"])
+    shutil.copy2(terrain_cfg_file, paths["log_dir"])
 
     summary = {
         "episodes_evaluated": 0,

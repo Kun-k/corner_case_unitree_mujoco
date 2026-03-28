@@ -74,6 +74,31 @@ class Go2Controller:
 
         return obs
 
+    def get_observation_without_prev_action(self, d):
+        """Return the robot observation vector (same format used for the policy)."""
+        qj = d.qpos[7:].copy()
+        dqj = d.qvel[6:].copy()
+        quat = d.qpos[3:7].copy()
+        lin_vel = d.qvel[:3].copy()
+        ang_vel = d.qvel[3:6].copy()
+
+        qj = (qj - self.default_angles) * self.dof_pos_scale
+        dqj = dqj * self.dof_vel_scale
+
+        gravity_orientation = get_gravity_orientation(quat)
+        lin_vel = lin_vel * self.lin_vel_scale
+        ang_vel = ang_vel * self.ang_vel_scale
+
+        obs = np.zeros(self.num_obs, dtype=np.float32)
+        obs[:3] = lin_vel
+        obs[3:6] = ang_vel
+        obs[6:9] = gravity_orientation
+        obs[9:12] = self.cmd * self.cmd_scale
+        obs[12: 12 + self.num_actions] = qj
+        obs[12 + self.num_actions: 12 + 2 * self.num_actions] = dqj
+
+        return obs
+
     def update_command(self, data, cmd, heading_stiffness, heading_target, heading_command=True):
         """Post-processes the velocity command.
 
