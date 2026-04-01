@@ -134,7 +134,7 @@ class G1Controller:
         sin_phase = np.sin(2.0 * np.pi * phase)
         cos_phase = np.cos(2.0 * np.pi * phase)
 
-        obs = np.zeros(self.num_obs, dtype=np.float32)
+        obs = np.zeros(self.num_obs - self.num_actions, dtype=np.float32)
         obs[:3] = omega
         obs[3:6] = gravity_orientation
         obs[6:9] = self.cmd * self.cmd_scale

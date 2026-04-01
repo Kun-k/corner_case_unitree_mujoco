@@ -89,7 +89,7 @@ class Go2Controller:
         lin_vel = lin_vel * self.lin_vel_scale
         ang_vel = ang_vel * self.ang_vel_scale
 
-        obs = np.zeros(self.num_obs, dtype=np.float32)
+        obs = np.zeros(self.num_obs - self.num_actions, dtype=np.float32)
         obs[:3] = lin_vel
         obs[3:6] = ang_vel
         obs[6:9] = gravity_orientation
