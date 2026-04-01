@@ -41,7 +41,7 @@ logging:
 event_and_reward:
   # 失败事件开关（可选关闭）
   failure_flags:
-    fallen: False
+    fallen: True
     collided: False
     base_collision: True
     thigh_collision: True
@@ -66,7 +66,7 @@ event_and_reward:
   target_speed: 1.0
   speed_reward_scale: 0
   stuck_speed_threshold: 0.05
-  stuck_reward: 4.0
+  stuck_reward: 2.0
 
   repeat_reward: False
 
