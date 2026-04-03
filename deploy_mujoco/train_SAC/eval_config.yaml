@@ -13,16 +13,20 @@ checkpoint: ""
 go2_task: "terrain"
 go2_config: "go2.yaml"
 terrain_config: "terrain_config.yaml"
+#go2_task: "terrain_g1"
+#go2_config: "g1.yaml"
+#terrain_config: "terrain_config_g1.yaml"
 
-episodes: 2000
+episodes: 4000
 max_episode_steps: 35
-seed: 122
+seed: 101018564167891021
 
 #log_name: "nohup_random_eval_go2-2_15cm_4"
 #log_name: "random_eval_0317-7"
 #log_name: "debug"
 #log_name: "sac_eval_gogogo0316_preload"
-log_name: "random_eval_0327"
+#log_name: "debug"
+log_name: "random_eval_0401-0329"
 
 use_curr_force: False  # 强制使用当前配置
 

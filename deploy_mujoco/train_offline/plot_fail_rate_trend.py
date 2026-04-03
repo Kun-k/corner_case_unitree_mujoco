@@ -321,8 +321,8 @@ def main() -> None:
     ax1.set_xlabel("Episodes evaluated")
     ax1.set_ylabel("Fail rate")
     ax1.set_title("Fail rate + RHW trend")
-    # ax1.set_ylim(0.0, 0.005)
-    ax1.set_ylim(0.0, max(0.01, float(np.nanmax(upper)) * 1.2 if upper.size > 0 else 0.01))
+    ax1.set_ylim(0.0, 0.002)
+    # ax1.set_ylim(0.0, max(0.01, float(np.nanmax(upper)) * 1.2 if upper.size > 0 else 0.01))
     ax1.grid(True, alpha=0.3)
 
     if np.any(np.isfinite(rhw_series)):

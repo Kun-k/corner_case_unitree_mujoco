@@ -2,27 +2,12 @@
 
 # Input pkl files or directories (same format as replay/train logs)
 pkl_paths:
-  - "../train_SAC/eval_logs/random_eval_0311-1"
-  - "../train_SAC/eval_logs/random_eval_0311-2"
-  - "../train_SAC/eval_logs/random_eval_0311-3"
-  - "../train_SAC/eval_logs/random_eval_0311-4"
-  - "../train_SAC/eval_logs/random_eval_0311-5"
-  - "../train_SAC/eval_logs/random_eval_0311-6"
-  - "../train_SAC/eval_logs/random_eval_0311-7"
-  - "../train_SAC/eval_logs/random_eval_0311-8"
-  - "../train_SAC/eval_logs/random_eval_0317-1"
-  - "../train_SAC/eval_logs/random_eval_0317-2"
-  - "../train_SAC/eval_logs/random_eval_0317-3"
-  - "../train_SAC/eval_logs/random_eval_0317-4"
-  - "../train_SAC/eval_logs/random_eval_0317-5"
-  - "../train_SAC/eval_logs/random_eval_0317-6"
-  - "../train_SAC/eval_logs/random_eval_0317-7"
-  - "../train_SAC/eval_logs/sac_eval_0313"
-#  - "../train_SAC/eval_logs/sac_eval_0313-1"
-#  - "../train_SAC/eval_logs/sac_eval_0313-2"
+  - "../train_SAC/eval_logs/random_eval_0327_20260328_001124"
+  - "../train_SAC/eval_logs/random_eval_0327_20260328_001128"
+  - "../train_SAC/eval_logs/random_eval_0327_20260328_001145"
 
 # Output directory
-output_dir: "random_eval_0317_0311_with_sac_eval_0313"
+output_dir: "debug"
 
 # Clustering method: kmeans | dbscan | both
 method: "both"
