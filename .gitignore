@@ -1,0 +1,12 @@
+/test_folder/
+/command.txt
+/environment.yml
+/MUJOCO_LOG.TXT
+/deploy_mujoco/train_SAC/eval_logs/
+/deploy_mujoco/train_SAC/train_logs/
+/deploy_mujoco/train_SAC_dense/train_logs/
+/deploy_mujoco/train_SAC_offline/train_logs/
+/deploy_mujoco/train_offline/states_logs/
+/.idea/corner_case_unitree_mujoco.iml
+/.idea/misc.xml
+/.idea/workspace.xml
